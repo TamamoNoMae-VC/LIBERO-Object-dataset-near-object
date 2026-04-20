@@ -1,0 +1,16 @@
+{
+  "dataset_name": "libero_a2b_binary",
+  "reward_mode": "binary",
+  "task_family": "libero_object",
+  "master_seed": 1337,
+  "successful_episode_count": 2,
+  "dataset_root": "E:\\работа\\datasetlibero2\\data\\dataset_binary_reward",
+  "index_path": "E:\\работа\\datasetlibero2\\data\\dataset_binary_reward\\index.jsonl",
+  "fields": {
+    "episode_path": "npz episode payload",
+    "payload_hash": "hash over trajectory payload excluding reward annotations",
+    "step_reward": "per-step rewards",
+    "reward_components": "component rewards, if shaped",
+    "return_to_go": "offline RTG"
+  }
+}

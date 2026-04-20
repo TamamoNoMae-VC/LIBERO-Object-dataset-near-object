@@ -1,0 +1,95 @@
+task:
+  family: libero_object
+  custom_task_name: milk_near_basket_a2b
+  preferred_language_matches:
+    - pick_up_the_milk_and_place_it_on_the_side_of_the_basket
+    - pick_up_the_milk_and_place_it_near_the_basket
+    - pick_up_the_milk_and_place_it_next_to_the_basket
+  forbidden_language_matches:
+    - pick_up_the_milk_and_place_it_in_the_basket
+    - pick_up_the_milk_and_place_it_into_the_basket
+  movable_object_name: milk
+  movable_object_aliases:
+    - milk
+    - milk_carton
+    - milk carton
+    - milkcarton
+  reference_object_name: basket
+  reference_object_aliases:
+    - basket
+  task_name: null
+  task_id: null
+
+collection:
+  master_seed: 1337
+  successful_episode_count: 10
+  max_attempts: 120
+  max_steps_per_episode: 220
+  settle_steps: 10
+  grasp_close_steps: 12
+  release_open_steps: 6
+  post_grasp_lift_steps: 12
+  keep_failure_logs: true
+  save_rollouts: true
+  save_failed_rollouts: true
+
+randomization:
+  allowed_relations:
+    - left
+    - right
+    - front
+    - back
+  radius_min: 0.18
+  radius_max: 0.24
+  min_reference_distance: 0.17
+  basket_exclusion_radius: 0.15
+  camera_x_min: -0.28
+  camera_x_max: 0.28
+  camera_y_min: 0.02
+  camera_y_max: 0.42
+  upright_quat_dot_min: 0.96
+  hover_height: 0.30
+  grasp_height_offset: 0.008
+  lift_height: 0.30
+  placement_height_offset: 0.025
+  min_a_b_distance: 0.07
+  max_resample_attempts: 64
+  success_distance_xy: 0.045
+  success_height_tol: 0.06
+  max_action_delta: 0.02
+  close_gripper_value: 1.0
+  open_gripper_value: -1.0
+  orientation_action:
+    - 0.0
+    - 0.0
+    - 0.0
+  grasp_orientation_action:
+    - 0.0
+    - 0.0
+    - 0.0
+  transport_orientation_action:
+    - 0.0
+    - 0.0
+    - 0.0
+  milk_grasp_local_offset:
+    - 0.0
+    - 0.0
+    - 0.02
+
+paths:
+  root: .
+  data_dir: data
+  raw_dir: data/raw
+  binary_dir: data/dataset_binary_reward
+  shaped_dir: data/dataset_shaped_reward
+  results_dir: results
+  metrics_dir: results/metrics
+  plots_dir: results/plots
+  reports_dir: results/reports
+  rollouts_dir: results/rollouts
+
+export:
+  binary_variant_dir: SimpleVLA-RL-binary
+  dense_variant_dir: SimpleVLA-RL-dense
+  include_full_observations: true
+  binary_reward_broadcast: true
