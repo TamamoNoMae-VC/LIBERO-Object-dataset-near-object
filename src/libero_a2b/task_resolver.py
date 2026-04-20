@@ -115,9 +115,13 @@ def resolve_task(cfg: PipelineConfig) -> ResolvedTask:
     scored: list[tuple[int, int, str, object]] = []
     for task_id, task, language in tasks:
         lowered = language.lower()
+        movable_score = _score_aliases(language, cfg.task.movable_object_aliases)
+        reference_score = _score_aliases(language, cfg.task.reference_object_aliases)
+        if movable_score <= 0 or reference_score <= 0:
+            continue
         score = 0
-        score += _score_aliases(language, cfg.task.movable_object_aliases)
-        score += _score_aliases(language, cfg.task.reference_object_aliases)
+        score += movable_score
+        score += reference_score
         if "place" in lowered:
             score += 1
         if "near" in lowered or "side" in lowered or "next to" in lowered:

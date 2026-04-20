@@ -359,7 +359,7 @@ def _apply_custom_libero_init(env, custom_init):
         return
     object_position = np.asarray(custom_init["custom_object_position"], dtype=np.float64)
     object_quat = np.asarray(custom_init["custom_object_quat"], dtype=np.float64)
-    movable_aliases = [str(custom_init.get("movable_object_name", "milk"))]
+    movable_aliases = [str(custom_init.get("movable_object_name", "orange_juice"))]
     joint_name = _resolve_first_name(list(env.sim.model.joint_names), movable_aliases, "movable joint")
     env.sim.data.set_joint_qpos(
         joint_name,
@@ -385,7 +385,11 @@ def _within_custom_camera_bounds(config, position):
 
 
 def _compute_custom_libero_success(env, config, custom_init):
-    movable_name = _resolve_first_name(list(env.sim.model.body_names), [str(custom_init.get("movable_object_name", "milk"))], "movable body")
+    movable_name = _resolve_first_name(
+        list(env.sim.model.body_names),
+        [str(custom_init.get("movable_object_name", "orange_juice"))],
+        "movable body",
+    )
     reference_aliases = list(getattr(config, "reference_object_aliases", ["basket"]))
     reference_name = _resolve_first_name(list(env.sim.model.body_names), reference_aliases, "reference body")
     object_position = _get_body_position(env, movable_name)
@@ -896,7 +900,7 @@ class RobHFRollout(BaseRollout):
                     "custom_object_position": custom_object_position[idx].tolist(),
                     "custom_object_quat": custom_object_quat[idx].tolist(),
                     "custom_target_position": custom_target_position[idx].tolist() if custom_target_position is not None else None,
-                    "movable_object_name": str(movable_object_name[idx]) if movable_object_name is not None else "milk",
+                    "movable_object_name": str(movable_object_name[idx]) if movable_object_name is not None else "orange_juice",
                     "trial_seed": trial_seed[idx][0].item() if trial_seed is not None else -1,
                 }
             input_q = Queue()

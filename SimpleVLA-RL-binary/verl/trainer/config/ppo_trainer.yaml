@@ -90,8 +90,8 @@ actor_rollout_ref:
     action_chunks_len: ${actor_rollout_ref.model.action_chunks_len}
     experiment_name: None
     unnorm_key: libero_10
-    custom_task_name: milk_near_basket_a2b
-    movable_object_aliases: ["milk", "milk_carton", "milk carton", "milkcarton"]
+    custom_task_name: orange_juice_near_basket_a2b
+    movable_object_aliases: ["orange_juice", "orange juice", "orangejuice"]
     reference_object_aliases: ["basket"]
     basket_exclusion_radius: 0.15
     near_basket_distance_min: 0.15

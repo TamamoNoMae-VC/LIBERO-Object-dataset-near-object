@@ -47,7 +47,10 @@ class LiberoOfflineInitDataset(Dataset):
             "custom_object_quat": np.asarray(object_quat, dtype=np.float32),
             "custom_target_position": np.asarray(metadata["b_position"], dtype=np.float32),
             "custom_reference_position": np.asarray(metadata["reference_object_pose"], dtype=np.float32),
-            "movable_object_name": metadata.get("resolved_movable_body", metadata.get("movable_object_name", "milk")),
+            "movable_object_name": metadata.get(
+                "resolved_movable_body",
+                metadata.get("movable_object_name", "orange_juice"),
+            ),
             "reference_object_name": metadata.get("resolved_reference_body", metadata.get("reference_object_name", "basket")),
             "offline_source_episode": int(metadata.get("episode_id", row.get("episode_id", index))),
             "data_source": "offline_init",

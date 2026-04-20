@@ -148,7 +148,7 @@ def load_config(path: str | Path) -> PipelineConfig:
     data = _load_yaml(config_path)
     task_cfg = dict(data["task"])
     task_cfg.setdefault("forbidden_language_matches", [])
-    task_cfg.setdefault("custom_task_name", "milk_near_basket_a2b")
+    task_cfg.setdefault("custom_task_name", "orange_juice_near_basket_a2b")
     task_cfg.setdefault("movable_object_aliases", [task_cfg["movable_object_name"]])
     task_cfg.setdefault("reference_object_aliases", [task_cfg["reference_object_name"]])
     cfg = PipelineConfig(

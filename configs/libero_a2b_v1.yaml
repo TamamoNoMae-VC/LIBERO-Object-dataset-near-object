@@ -1,19 +1,18 @@
 task:
   family: libero_object
-  custom_task_name: milk_near_basket_a2b
+  custom_task_name: orange_juice_near_basket_a2b
   preferred_language_matches:
-    - pick_up_the_milk_and_place_it_on_the_side_of_the_basket
-    - pick_up_the_milk_and_place_it_near_the_basket
-    - pick_up_the_milk_and_place_it_next_to_the_basket
+    - pick_up_the_orange_juice_and_place_it_on_the_side_of_the_basket
+    - pick_up_the_orange_juice_and_place_it_near_the_basket
+    - pick_up_the_orange_juice_and_place_it_next_to_the_basket
   forbidden_language_matches:
-    - pick_up_the_milk_and_place_it_in_the_basket
-    - pick_up_the_milk_and_place_it_into_the_basket
-  movable_object_name: milk
+    - pick_up_the_orange_juice_and_place_it_in_the_basket
+    - pick_up_the_orange_juice_and_place_it_into_the_basket
+  movable_object_name: orange_juice
   movable_object_aliases:
-    - milk
-    - milk_carton
-    - milk carton
-    - milkcarton
+    - orange_juice
+    - orange juice
+    - orangejuice
   reference_object_name: basket
   reference_object_aliases:
     - basket
