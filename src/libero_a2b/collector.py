@@ -196,33 +196,40 @@ def _normalize_quat(quat: np.ndarray) -> np.ndarray:
     quat = np.asarray(quat, dtype=np.float64)
     norm = np.linalg.norm(quat)
     if norm <= 1e-8:
-        return np.array([0.0, 0.0, 0.0, 1.0], dtype=np.float64)
+        # MuJoCo free-joint quaternions are stored as [w, x, y, z].
+        return np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float64)
     return quat / norm
 
 
 def _quat_conjugate(quat: np.ndarray) -> np.ndarray:
     quat = _normalize_quat(quat)
-    return np.array([-quat[0], -quat[1], -quat[2], quat[3]], dtype=np.float64)
+    return np.array([quat[0], -quat[1], -quat[2], -quat[3]], dtype=np.float64)
 
 
 def _quat_multiply(lhs: np.ndarray, rhs: np.ndarray) -> np.ndarray:
-    x1, y1, z1, w1 = _normalize_quat(lhs)
-    x2, y2, z2, w2 = _normalize_quat(rhs)
+    # MuJoCo quaternion layout: [w, x, y, z].
+    w1, x1, y1, z1 = _normalize_quat(lhs)
+    w2, x2, y2, z2 = _normalize_quat(rhs)
     return np.array(
         [
+            w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2,
             w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2,
             w1 * y2 - x1 * z2 + y1 * w2 + z1 * x2,
             w1 * z2 + x1 * y2 - y1 * x2 + z1 * w2,
-            w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2,
         ],
         dtype=np.float64,
     )
 
 
 def _rotate_vector_by_quat(vector: np.ndarray, quat: np.ndarray) -> np.ndarray:
-    vector_quat = np.array([vector[0], vector[1], vector[2], 0.0], dtype=np.float64)
-    rotated = _quat_multiply(_quat_multiply(quat, vector_quat), _quat_conjugate(quat))
-    return rotated[:3]
+    # Rotate a 3D vector by a MuJoCo quaternion without normalizing the vector magnitude.
+    q = _normalize_quat(quat)
+    w = float(q[0])
+    xyz = np.asarray(q[1:4], dtype=np.float64)
+    vector = np.asarray(vector, dtype=np.float64)
+    uv = np.cross(xyz, vector)
+    uuv = np.cross(xyz, uv)
+    return vector + 2.0 * (w * uv + uuv)
 
 
 def _quat_alignment_dot(lhs: np.ndarray, rhs: np.ndarray) -> float:
@@ -239,7 +246,7 @@ def _within_camera_bounds(cfg: PipelineConfig, position: np.ndarray) -> bool:
 
 
 def _set_object_pose(env, joint_name: str, position: np.ndarray, quat: np.ndarray | None = None) -> None:
-    quat = np.array([0.0, 0.0, 0.0, 1.0], dtype=np.float64) if quat is None else quat
+    quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float64) if quat is None else quat
     qpos = np.concatenate([np.asarray(position, dtype=np.float64), np.asarray(quat, dtype=np.float64)])
     env.sim.data.set_joint_qpos(joint_name, qpos)
     try:
