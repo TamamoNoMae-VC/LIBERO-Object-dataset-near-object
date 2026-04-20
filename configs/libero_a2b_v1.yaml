@@ -48,7 +48,7 @@ randomization:
   camera_y_max: 0.42
   upright_quat_dot_min: 0.96
   hover_height: 0.30
-  grasp_height_offset: 0.008
+  grasp_height_offset: -0.01
   lift_height: 0.30
   placement_height_offset: 0.025
   min_a_b_distance: 0.07
@@ -73,7 +73,7 @@ randomization:
   milk_grasp_local_offset:
     - 0.0
     - 0.0
-    - 0.02
+    - 0.0
 
 paths:
   root: .

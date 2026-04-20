@@ -624,18 +624,15 @@ def _collect_single_attempt(
 
         _step_noop(env, cfg.collection.settle_steps)
         reference_position = _get_body_pos(env, reference_body)
-        print(reference_position)
         movable_joint_qpos = _get_joint_qpos(env, movable_joint)
         object_spawn_position = movable_joint_qpos[:3].copy()
         object_spawn_quat = movable_joint_qpos[3:7].copy()
         placement = sample_a_b_positions(cfg, reference_position, float(object_spawn_position[2]), attempt_index)
-        print(placement.a_position)
         _set_object_pose(env, movable_joint, placement.a_position, quat=object_spawn_quat)
         obs = _step_noop(env, cfg.collection.settle_steps)
         if obs is None:
             obs = env._get_observations()
         settled_object_position = _get_body_pos(env, movable_body)
-        print(settled_object_position)
         settled_joint_qpos = _get_joint_qpos(env, movable_joint)
         controller_translation_scale = _get_controller_translation_scale(env)
         spawn_ok, spawn_failure_reason, spawn_diagnostics = _validate_spawn_state(
